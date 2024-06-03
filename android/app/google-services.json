@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827130332246",
+    "project_id": "evaly-488b4",
+    "storage_bucket": "evaly-488b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827130332246:android:92fca1216d662bb97ba7f7",
+        "android_client_info": {
+          "package_name": "com.example.evaly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL4yqRqeSJ347hIgoyClkO55Ttyepg8Zk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

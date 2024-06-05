@@ -11,6 +11,7 @@ class SplashController extends GetxController {
 
   final onBoardCheck = box.value.read("OnBoard") == null;
   final userCheck = box.value.read("User") == null;
+
   nextPage() async {
     await Future.delayed(
       const Duration(milliseconds: 2000),

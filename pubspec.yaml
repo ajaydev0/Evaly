@@ -83,9 +83,13 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: Genos
+      fonts:
+        - asset: fonts/Genos-Bold.ttf
     - family: Aleo
       fonts:
         - asset: fonts/Aleo-VariableFont_wght.ttf
+
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../const/const.dart';
@@ -43,7 +45,9 @@ class NavBarView extends GetView<NavBarController> {
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset(
-                      "assets/icons/movie.png",
+                    controller.currentindex.value == 1
+                          ? "assets/icons/love.png"
+                          : "assets/icons/love2.png",
                       height: navBarHeight,
 
                       // height: 27,
@@ -55,7 +59,9 @@ class NavBarView extends GetView<NavBarController> {
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset(
-                      "assets/icons/message.png",
+                            controller.currentindex.value == 2
+                          ? "assets/icons/cart.png"
+                          : "assets/icons/cart2.png",
                       height: navBarHeight,
                       // height: 27,
                       color: controller.currentindex.value == 2

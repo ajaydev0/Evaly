@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../../const/const.dart';
 import '../../../widgets/KText.dart';
@@ -28,12 +29,12 @@ class HomePageView extends GetView<HomePageController> {
                   children: [
                     InkWell(
                       onTap: () {
-                          controller.globalKey.currentState?.openDrawer();
+                        controller.globalKey.currentState?.openDrawer();
                       },
                       child: Container(
                         alignment: Alignment.center,
-                        height: 32,
-                        width: 32,
+                        height: 30,
+                        width: 30,
                         decoration: BoxDecoration(
                             image: const DecorationImage(
                               image: AssetImage("assets/icons/menu.png"),
@@ -43,22 +44,37 @@ class HomePageView extends GetView<HomePageController> {
                             borderRadius: BorderRadius.circular(50)),
                       ),
                     ),
-                    Row(
-                      children: [
-                        Icon(Icons.location_on_outlined,
-                            size: 17, color: Colors.grey.shade600),
-                        const SizedBox(width: 1),
-                        Ktext(
-                          text: "Mirpur 10",
-                          fontSize: 15,
-                          color: Colors.grey.shade600,
-                        ),
-                      ],
+                    Container(
+                      height: 35,
+                      width: 240,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(50)),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            hintText: "What would you like to buy?",
+                            hintStyle: TextStyle(fontSize: 13),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide.none)),
+                      ),
                     ),
+
+                    // Row(
+                    //   children: [
+                    //     Icon(Icons.location_on_outlined,
+                    //         size: 17, color: Colors.grey.shade600),
+                    //     const SizedBox(width: 1),
+                    //     Ktext(
+                    //       text: "Mirpur 10",
+                    //       fontSize: 15,
+                    //       color: Colors.grey.shade600,
+                    //     ),
+                    //   ],
+                    // ),
                     Container(
                       alignment: Alignment.center,
-                      height: 32,
-                      width: 32,
+                      height: 28,
+                      width: 28,
                       decoration: BoxDecoration(
                           image: const DecorationImage(
                             image: AssetImage("assets/icons/notification.png"),
@@ -395,9 +411,7 @@ Widget KDrawer(
               Icons.arrow_forward,
               color: Colors.grey.shade300,
             ),
-            onTap: () {
-        
-            },
+            onTap: () {},
           ),
         ),
       ],

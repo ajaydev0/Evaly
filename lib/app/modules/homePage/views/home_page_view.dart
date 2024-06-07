@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../../const/const.dart';
 import '../../../widgets/KText.dart';
@@ -17,12 +16,12 @@ class HomePageView extends GetView<HomePageController> {
         drawer: SafeArea(child: KDrawer(controller, context)),
         // backgroundColor: Color.fromARGB(255, 172, 171, 171),
         body: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 40),
+          padding: const EdgeInsets.only(left: 10, right: 5, top: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 10, right: 10),
+                padding: const EdgeInsets.only(top: 5, right: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   // crossAxisAlignment: CrossAxisAlignment.end,
@@ -35,6 +34,7 @@ class HomePageView extends GetView<HomePageController> {
                         alignment: Alignment.center,
                         height: 30,
                         width: 30,
+                        margin: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             image: const DecorationImage(
                               image: AssetImage("assets/icons/menu.png"),
@@ -48,14 +48,39 @@ class HomePageView extends GetView<HomePageController> {
                       height: 35,
                       width: 240,
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
+                          color: Colors.grey.shade200,
                           borderRadius: BorderRadius.circular(50)),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            hintText: "What would you like to buy?",
-                            hintStyle: TextStyle(fontSize: 13),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none)),
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const SizedBox(width: 10),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 18,
+                            width: 18,
+                            decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                  image: AssetImage("assets/icons/search.png"),
+                                  fit: BoxFit.cover,
+                                ),
+                                // color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(50)),
+                          ),
+                          Container(
+                            height: 35,
+                            width: 200,
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                            ),
+                            child: const TextField(
+                              decoration: InputDecoration(
+                                  hintText: "What would you like to buy?",
+                                  hintStyle: TextStyle(fontSize: 12.5,fontFamily: "Aleo",color: Colors.black),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide.none)),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
@@ -71,17 +96,23 @@ class HomePageView extends GetView<HomePageController> {
                     //     ),
                     //   ],
                     // ),
-                    Container(
-                      alignment: Alignment.center,
-                      height: 28,
-                      width: 28,
-                      decoration: BoxDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage("assets/icons/notification.png"),
-                            fit: BoxFit.cover,
-                          ),
-                          // color: Colors.grey,
-                          borderRadius: BorderRadius.circular(50)),
+                  InkWell(
+                      onTap: () {
+                        // controller.globalKey.currentState?.openDrawer();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 28,
+                        width: 28,
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: AssetImage("assets/icons/notification.png"),
+                              fit: BoxFit.cover,
+                            ),
+                            // color: Colors.grey,
+                            borderRadius: BorderRadius.circular(50)),
+                      ),
                     ),
                   ],
                 ),

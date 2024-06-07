@@ -1,3 +1,4 @@
+import 'package:evaly/app/modules/CartPage/views/cart_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,7 @@ class NavBarController extends GetxController {
   List pages = [
     const HomePageView(),
     Container(color: Colors.green),
-    Container(color: Colors.green),
+    const CartPageView(),
     const ProfilePageView()
   ];
 }

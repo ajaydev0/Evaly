@@ -36,7 +36,7 @@ class ProfilePageView extends GetView<ProfilePageController> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: <Widget>[
+          children: [
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -146,12 +146,49 @@ class ProfilePageView extends GetView<ProfilePageController> {
                     color: Colors.grey.shade500,
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 0,
                   ),
                   makeActionButtons(),
                   const SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        height: 55,
+                        width: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Icon(Icons.edit_document,color: Colors.grey.shade800,),
+                      ),
+                      Container(
+                        height: 55,
+                        width: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Icon(Icons.person,color: Colors.grey.shade800,),
+                      ),
+                      Container(
+                        height: 55,
+                        width: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Icon(Icons.location_on_rounded,color: Colors.grey.shade800,),
+                      ),
+                      Container(
+                        height: 55,
+                        width: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Icon(Icons.message_rounded,color: Colors.grey.shade800,),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -250,7 +287,7 @@ class ProfilePageView extends GetView<ProfilePageController> {
                   height: double.infinity,
                   elevation: 0,
                   onPressed: () {},
-                  color: Kcolor.black,
+                  color: Colors.grey.shade900,
                   child: Ktext(
                     text: "Edit Profile",
                     color: Colors.white,

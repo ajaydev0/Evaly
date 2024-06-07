@@ -11,27 +11,33 @@ class NavBarView extends GetView<NavBarController> {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height / 100;
     var screenWidth = MediaQuery.of(context).size.width / 100;
-    var navBarHeight = screenHeight * 3.3;
+    var navBarHeight = screenHeight * 2.8;
     return Obx(
       () => Scaffold(
         extendBody: true,
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(15),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-              ),
-              child: BottomNavigationBar(
-                backgroundColor: Colors.grey.shade200,
-                showUnselectedLabels: false,
-                showSelectedLabels: false,
-                type: BottomNavigationBarType.fixed,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
+        bottomNavigationBar: ClipRRect(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(20)),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.white,
+            ),
+            child: BottomNavigationBar(
+              backgroundColor: Colors.white,
+              // showUnselectedLabels: false,
+              showSelectedLabels: true,
+              selectedFontSize:11 ,
+              unselectedFontSize: 11,
+              selectedItemColor: Colors.black,
+              selectedLabelStyle: TextStyle(fontFamily: "Aleo"),
+              unselectedLabelStyle: TextStyle(fontFamily: "Aleo"),
+              type: BottomNavigationBarType.fixed,
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Padding(
+                    padding: const EdgeInsets.only(top: 5,bottom: 3),
+                    child: Image.asset(
                       controller.currentindex.value == 0
                           ? "assets/icons/home.png"
                           : "assets/icons/home2.png",
@@ -41,11 +47,15 @@ class NavBarView extends GetView<NavBarController> {
                           ? Kcolor.black
                           : Colors.grey.shade500,
                     ),
-                    label: "Home",
                   ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
-                    controller.currentindex.value == 1
+                  label: "Home",
+                  
+                ),
+                BottomNavigationBarItem(
+                  icon: Padding(
+                    padding: const EdgeInsets.only(top: 5,bottom: 3),
+                    child: Image.asset(
+                      controller.currentindex.value == 1
                           ? "assets/icons/love.png"
                           : "assets/icons/love2.png",
                       height: navBarHeight,
@@ -55,11 +65,14 @@ class NavBarView extends GetView<NavBarController> {
                           ? Kcolor.black
                           : Colors.grey.shade500,
                     ),
-                    label: 'movie',
                   ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
-                            controller.currentindex.value == 2
+                  label: 'Favorite',
+                ),
+                BottomNavigationBarItem(
+                  icon: Padding(
+            padding: const EdgeInsets.only(top: 5,bottom: 3),
+                    child: Image.asset(
+                      controller.currentindex.value == 2
                           ? "assets/icons/cart.png"
                           : "assets/icons/cart2.png",
                       height: navBarHeight,
@@ -68,10 +81,13 @@ class NavBarView extends GetView<NavBarController> {
                           ? Kcolor.black
                           : Colors.grey.shade500,
                     ),
-                    label: 'message',
                   ),
-                  BottomNavigationBarItem(
-                    icon: Image.asset(
+                  label: 'Cart',
+                ),
+                BottomNavigationBarItem(
+                  icon: Padding(
+              padding: const EdgeInsets.only(top: 5,bottom: 3),
+                    child: Image.asset(
                       controller.currentindex.value == 3
                           ? "assets/icons/user.png"
                           : "assets/icons/user2.png",
@@ -81,14 +97,14 @@ class NavBarView extends GetView<NavBarController> {
                           ? Kcolor.black
                           : Colors.grey.shade500,
                     ),
-                    label: 'person',
                   ),
-                ],
-                onTap: (index) {
-                  controller.currentindex.value = index;
-                },
-                currentIndex: controller.currentindex.value,
-              ),
+                  label: 'Profile',
+                ),
+              ],
+              onTap: (index) {
+                controller.currentindex.value = index;
+              },
+              currentIndex: controller.currentindex.value,
             ),
           ),
         ),

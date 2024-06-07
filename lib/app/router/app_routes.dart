@@ -8,6 +8,7 @@ abstract class Routes {
   static const signUp_Page = _Path.signUp_Page;
   static const nav_Bar = _Path.nav_Bar;
   static const onBoard = _Path.onBoard;
+  static const CART_PAGE = '/cart-page';
 }
 
 abstract class _Path {

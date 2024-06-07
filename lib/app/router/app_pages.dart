@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+
+import '../modules/CartPage/bindings/cart_page_binding.dart';
+import '../modules/CartPage/views/cart_page_view.dart';
 import '../modules/LoginPage/bindings/login_page_binding.dart';
 import '../modules/LoginPage/views/login_page_view.dart';
 import '../modules/NavBar/bindings/nav_bar_binding.dart';
@@ -22,14 +25,11 @@ class AppPages {
       page: () => const SplashView(),
       binding: SplashBinding(),
     ),
-
-    
     GetPage(
       name: Routes.HomePage,
       page: () => const HomePageView(),
       binding: HomePageBinding(),
     ),
-
     GetPage(
       name: Routes.login_Page,
       page: () => const LoginPageView(),
@@ -40,16 +40,20 @@ class AppPages {
       page: () => const SignupPageView(),
       binding: SignupPageBinding(),
     ),
-     GetPage(
+    GetPage(
       name: Routes.nav_Bar,
       page: () => const NavBarView(),
       binding: NavBarBinding(),
     ),
-     GetPage(
+    GetPage(
       name: _Path.onBoard,
       page: () => const OnboardView(),
       binding: OnboardBinding(),
     ),
-   
+    GetPage(
+      name: Routes.CART_PAGE,
+      page: () => const CartPageView(),
+      binding: CartPageBinding(),
+    ),
   ];
 }

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../const/const.dart';
 import '../../../widgets/KText.dart';
 import '../controllers/profile_page_controller.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePageView extends GetView<ProfilePageController> {
   const ProfilePageView({super.key});
@@ -11,6 +14,10 @@ class ProfilePageView extends GetView<ProfilePageController> {
   Widget build(BuildContext context) {
     var user = FirebaseAuth.instance.currentUser;
     var controller = Get.put(ProfilePageController());
+    //Image Picker
+    final picker = ImagePicker();
+    File? imageFile;
+
     return Scaffold(
       key: controller.globalKey,
       endDrawer: SafeArea(child: KEndDrawer(controller, context)),
@@ -37,6 +44,11 @@ class ProfilePageView extends GetView<ProfilePageController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            //Null Saftey Issue Problem
+            // Padding(
+            //   padding: EdgeInsets.all(30),
+            //   child: Image.file(imageFile!),
+            // ),
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -51,6 +63,8 @@ class ProfilePageView extends GetView<ProfilePageController> {
                     transitionOnUserGestures: true,
                     tag: "ajay",
                     child: Container(
+                        height: 100,
+                        width: 100,
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
@@ -61,72 +75,167 @@ class ProfilePageView extends GetView<ProfilePageController> {
                                   blurRadius: 20,
                                   offset: const Offset(0, 10))
                             ]),
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(user!.photoURL ?? ""),
-                          maxRadius: 45,
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                padding: const EdgeInsets.all(2),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                ),
-                                child: PopupMenuButton(
-                                  color: Colors.white,
-                                  child: Container(
-                                      alignment: Alignment.center,
-                                      height: 20,
-                                      width: 25,
-                                      decoration: BoxDecoration(
-                                        color: Kcolor.black,
+                        child: user!.photoURL == null
+                            ? CircleAvatar(
+                                backgroundImage:
+                                    const AssetImage("assets/user.png"),
+                                maxRadius: 45,
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      padding: const EdgeInsets.all(2),
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
-                                      ),
-                                      child: const Icon(
-                                        Icons.edit,
-                                        size: 13,
                                         color: Colors.white,
-                                      )),
-                                  onSelected: (value) {
-                                    if (value == "Create MCQ") {
-                                      print("Create MCQ");
-                                    } else if (value == "Create Written") {
-                                      print("Create Written");
-                                    } else if (value == "Create Forum") {
-                                      print("Create Forum");
-                                    }
-                                  },
-                                  itemBuilder: (context) {
-                                    return [
-                                      const PopupMenuItem(
-                                        height: 30,
-                                        value: "Create MCQ",
-                                        child: Text(
-                                          "Edit Photo",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
                                       ),
-                                      const PopupMenuItem(
-                                        height: 30,
-                                        value: "Create MCQ",
-                                        child: Text(
-                                          "Change Photo",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                      child: PopupMenuButton(
+                                        color: Colors.white,
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            height: 20,
+                                            width: 25,
+                                            decoration: BoxDecoration(
+                                              color: Kcolor.black,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              size: 13,
+                                              color: Colors.white,
+                                            )),
+                                        onSelected: (value) async {
+                                          if (value == "Take Photo") {
+                                            print("Take Photo");
+                                            //Take Image Picker Logic
+                                            final pickedFile =
+                                                await picker.pickImage(
+                                                    source: ImageSource.camera);
+                                            if (pickedFile != null) {
+                                              imageFile = File(pickedFile.path);
+                                            }
+                                          } else if (value == "Choose Photo") {
+                                            print("Choose Photo");
+                                            //Choose Image Picker Logic
+                                            final pickedFile =
+                                                await picker.pickImage(
+                                                    source:
+                                                        ImageSource.gallery);
+                                            if (pickedFile != null) {
+                                              imageFile = File(pickedFile.path);
+                                            }
+                                          }
+                                        },
+                                        itemBuilder: (context) {
+                                          return [
+                                            const PopupMenuItem(
+                                              height: 30,
+                                              value: "Take Photo",
+                                              child: Text(
+                                                "Take Photo",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            const PopupMenuItem(
+                                              height: 30,
+                                              value: "Choose Photo",
+                                              child: Text(
+                                                "Choose Photo",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ];
+                                        },
                                       ),
-                                    ];
-                                  },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )),
+                              )
+                            : CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(user.photoURL ?? ""),
+                                maxRadius: 45,
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: GestureDetector(
+                                    onTap: () {},
+                                    child: Container(
+                                      padding: const EdgeInsets.all(2),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: PopupMenuButton(
+                                        color: Colors.white,
+                                        child: Container(
+                                            alignment: Alignment.center,
+                                            height: 20,
+                                            width: 25,
+                                            decoration: BoxDecoration(
+                                              color: Kcolor.black,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              size: 13,
+                                              color: Colors.white,
+                                            )),
+                                        onSelected: (value) async {
+                                          if (value == "Take Photo") {
+                                            print("Take Photo");
+                                            //Take Image Picker Logic
+                                            final pickedFile =
+                                                await picker.pickImage(
+                                                    source: ImageSource.camera);
+                                            if (pickedFile != null) {
+                                              imageFile = File(pickedFile.path);
+                                            }
+                                          } else if (value == "Choose Photo") {
+                                            print("Choose Photo");
+                                            //Choose Image Picker Logic
+                                            final pickedFile =
+                                                await picker.pickImage(
+                                                    source:
+                                                        ImageSource.gallery);
+                                            if (pickedFile != null) {
+                                              imageFile = File(pickedFile.path);
+                                            }
+                                          }
+                                        },
+                                        itemBuilder: (context) {
+                                          return [
+                                            const PopupMenuItem(
+                                              height: 30,
+                                              value: "Take Photo",
+                                              child: Text(
+                                                "Take Photo",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            const PopupMenuItem(
+                                              height: 30,
+                                              value: "Choose Photo",
+                                              child: Text(
+                                                "Choose Photo",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ];
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
                   ),
                   const SizedBox(
                     height: 20,
@@ -161,7 +270,10 @@ class ProfilePageView extends GetView<ProfilePageController> {
                         decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(50)),
-                        child: Icon(Icons.edit_document,color: Colors.grey.shade800,),
+                        child: Icon(
+                          Icons.edit_document,
+                          color: Colors.grey.shade800,
+                        ),
                       ),
                       Container(
                         height: 55,
@@ -169,7 +281,10 @@ class ProfilePageView extends GetView<ProfilePageController> {
                         decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(50)),
-                        child: Icon(Icons.person,color: Colors.grey.shade800,),
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.grey.shade800,
+                        ),
                       ),
                       Container(
                         height: 55,
@@ -177,7 +292,10 @@ class ProfilePageView extends GetView<ProfilePageController> {
                         decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(50)),
-                        child: Icon(Icons.location_on_rounded,color: Colors.grey.shade800,),
+                        child: Icon(
+                          Icons.location_on_rounded,
+                          color: Colors.grey.shade800,
+                        ),
                       ),
                       Container(
                         height: 55,
@@ -185,7 +303,10 @@ class ProfilePageView extends GetView<ProfilePageController> {
                         decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(50)),
-                        child: Icon(Icons.message_rounded,color: Colors.grey.shade800,),
+                        child: Icon(
+                          Icons.message_rounded,
+                          color: Colors.grey.shade800,
+                        ),
                       ),
                     ],
                   )

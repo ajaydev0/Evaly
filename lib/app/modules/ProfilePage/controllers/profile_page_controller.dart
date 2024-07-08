@@ -23,7 +23,7 @@ class ProfilePageController extends GetxController {
       },
     );
   }
-
+  //LogOut Click
   logout() async {
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();

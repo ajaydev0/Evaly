@@ -11,7 +11,7 @@ class NavBarController extends GetxController {
 
   List pages = [
     const HomePageView(),
-    Container(color: Colors.green),
+    Container(color: Colors.white),
     const CartPageView(),
     const ProfilePageView()
   ];

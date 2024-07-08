@@ -9,6 +9,7 @@ abstract class Routes {
   static const nav_Bar = _Path.nav_Bar;
   static const onBoard = _Path.onBoard;
   static const CART_PAGE = '/cart-page';
+  static const PRODUCT_DETAILS = '/product-details';
 }
 
 abstract class _Path {

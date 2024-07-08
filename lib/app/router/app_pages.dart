@@ -8,6 +8,8 @@ import '../modules/NavBar/bindings/nav_bar_binding.dart';
 import '../modules/NavBar/views/nav_bar_view.dart';
 import '../modules/Onboard/bindings/onboard_binding.dart';
 import '../modules/Onboard/views/onboard_view.dart';
+import '../modules/ProductDetails/bindings/product_details_binding.dart';
+import '../modules/ProductDetails/views/product_details_view.dart';
 import '../modules/SignupPage/bindings/signup_page_binding.dart';
 import '../modules/SignupPage/views/signup_page_view.dart';
 import '../modules/homePage/bindings/home_page_binding.dart';
@@ -54,6 +56,11 @@ class AppPages {
       name: Routes.CART_PAGE,
       page: () => const CartPageView(),
       binding: CartPageBinding(),
+    ),
+    GetPage(
+      name: Routes.PRODUCT_DETAILS,
+      page: () => const ProductDetailsView(),
+      binding: ProductDetailsBinding(),
     ),
   ];
 }

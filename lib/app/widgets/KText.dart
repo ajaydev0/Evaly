@@ -11,7 +11,8 @@ Widget Ktext(
     backgroundColor,
     wordSpacing,
     overflow,
-    maxLines
+    maxLines,
+    decoration
     
     }) {
   return Text(text,
@@ -24,6 +25,7 @@ Widget Ktext(
           backgroundColor: backgroundColor,
           wordSpacing: wordSpacing,
           overflow: overflow,
+          decoration: decoration,
           
           ),maxLines: maxLines,);
 }

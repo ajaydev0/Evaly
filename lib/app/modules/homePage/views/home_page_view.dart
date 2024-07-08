@@ -1,7 +1,9 @@
+import 'package:evaly/app/router/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../const/const.dart';
 import '../../../widgets/KText.dart';
+import '../../ProductDetails/list/product_list.dart';
 import '../controllers/home_page_controller.dart';
 
 class HomePageView extends GetView<HomePageController> {
@@ -12,6 +14,7 @@ class HomePageView extends GetView<HomePageController> {
     var AppWidth = (MediaQuery.of(context).size.width) / 100;
     var controller = Get.put(HomePageController());
     return Scaffold(
+        backgroundColor: Colors.grey.shade200,
         key: controller.globalKey,
         drawer: SafeArea(child: KDrawer(controller, context)),
         // backgroundColor: Color.fromARGB(255, 172, 171, 171),
@@ -75,7 +78,10 @@ class HomePageView extends GetView<HomePageController> {
                             child: const TextField(
                               decoration: InputDecoration(
                                   hintText: "What would you like to buy?",
-                                  hintStyle: TextStyle(fontSize: 12.5,fontFamily: "Aleo",color: Colors.black),
+                                  hintStyle: TextStyle(
+                                      fontSize: 12.5,
+                                      fontFamily: "Aleo",
+                                      color: Colors.black),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none)),
                             ),
@@ -96,7 +102,7 @@ class HomePageView extends GetView<HomePageController> {
                     //     ),
                     //   ],
                     // ),
-                  InkWell(
+                    InkWell(
                       onTap: () {
                         // controller.globalKey.currentState?.openDrawer();
                       },
@@ -107,7 +113,8 @@ class HomePageView extends GetView<HomePageController> {
                         margin: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             image: const DecorationImage(
-                              image: AssetImage("assets/icons/notification.png"),
+                              image:
+                                  AssetImage("assets/icons/notification.png"),
                               fit: BoxFit.cover,
                             ),
                             // color: Colors.grey,
@@ -117,72 +124,97 @@ class HomePageView extends GetView<HomePageController> {
                   ],
                 ),
               ),
-
-              // Text(
-              //   "Find your next trip",
-              //   style: TextStyle(fontSize: 13),
-              // ),
-              // const Padding(
-              //   padding: EdgeInsets.only(top: 30, left: 10, right: 10),
-              //   child: Text(
-              //     "Explore New Destination",
-              //     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              //   ),
-              // ),
-              // const SizedBox(height: 10),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Material(
-              //       borderRadius: BorderRadius.circular(50),
-              //       elevation: 10,
-              //       child: Container(
-              //           height: 50,
-              //           width: AppWidth * 85,
-              //           decoration: BoxDecoration(
-              //               color: Colors.white,
-              //               // border: Border.all(color: Colors.grey),
-              //               borderRadius: BorderRadius.circular(50)),
-              //           child: Row(
-              //             children: [
-              //               const SizedBox(width: 10),
-              //               const Icon(
-              //                 Icons.search,
-              //                 color: Colors.grey,
-              //               ),
-              //               const SizedBox(width: 10),
-              //               const Expanded(
-              //                   child: TextField(
-              //                 decoration: InputDecoration(
-              //                     border: InputBorder.none,
-              //                     hintText: "Search...",
-              //                     hintStyle: TextStyle(color: Colors.grey)),
-              //               )),
-              //               Container(
-              //                 alignment: Alignment.center,
-              //                 height: 40,
-              //                 width: 40,
-              //                 decoration: BoxDecoration(
-              //                     color: Colors.grey,
-              //                     borderRadius: BorderRadius.circular(50)),
-              //                 child: const Icon(
-              //                   Icons.menu,
-              //                   size: 18,
-              //                 ),
-              //               ),
-              //               const SizedBox(width: 8),
-              //             ],
-              //           )),
-              //     ),
-              //   ],
-              // ),
-              // const Padding(
-              //   padding: EdgeInsets.only(top: 30, left: 0, right: 0),
-              //   child: Text(
-              //     "Catagories",
-              //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              //   ),
-              // ),
+              //HomePage Works
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 1.3 / 2,
+                    // crossAxisSpacing: 20,
+                    // mainAxisSpacing: 20,
+                  ),
+                  itemCount: productList.length,
+                  itemBuilder: (context, index) {
+                    var data = productList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.PRODUCT_DETAILS, arguments: data);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //Product Image
+                            Container(
+                              height: 120,
+                              margin: const EdgeInsets.all(10),
+                              color: Colors.white,
+                              child: Image.asset(data.imageUrl),
+                            ),
+                            // Image.asset(data.imageUrl,height: 100,)
+                            //Product Name
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 13),
+                              child: Ktext(
+                                text: data.productName,
+                                fontSize: 11,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                              ),
+                            ),
+                            //Discount Price
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 13),
+                              child: Row(
+                                children: [
+                                  Ktext(
+                                      text: "৳ ${data.discountPrice}",
+                                      fontSize: 9,
+                                      decoration: TextDecoration.lineThrough,
+                                      color: Colors.grey),
+                                ],
+                              ),
+                            ),
+                            //Main Price
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 13),
+                              child: Row(
+                                children: [
+                                  Ktext(
+                                      text: "৳ ${data.mainPrice}",
+                                      fontSize: 10,
+                                      color: Colors.amber[800],
+                                      fontWeight: FontWeight.bold),
+                                ],
+                              ),
+                            ),
+                            //Stock
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 13),
+                              child: Row(
+                                children: [
+                                  Ktext(
+                                      text: "in stock",
+                                      fontSize: 9,
+                                      color: Colors.grey),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              )
             ],
           ),
         ));

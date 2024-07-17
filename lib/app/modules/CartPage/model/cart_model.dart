@@ -1,11 +1,19 @@
 //Product Model
-class ProductModel {
+import 'package:get/get.dart';
+
+import '../../ProductDetails/model/product_model.dart';
+
+class CartModel {
+  //
+  final ProductModel productData;
+  RxInt quantity;
+  //
   String? imageUrl;
   String? productName;
   String? productType;
   String? brand;
-  int? discountPrice;
-  int? mainPrice;
+  String? discountPrice;
+  String? mainPrice;
   String? stock;
   String? description;
   String? specifications;
@@ -14,7 +22,11 @@ class ProductModel {
   String? warranty;
   Function? onTap;
 
-  ProductModel(
+  CartModel(
+      //
+      this.productData,
+      this.quantity,
+      //
       {this.imageUrl,
       this.productName,
       this.productType,
@@ -29,3 +41,11 @@ class ProductModel {
       this.warranty,
       this.onTap});
 }
+
+
+// class CartModel {
+//   final ProductModel data;
+//   int quantity;
+
+//   CartModel(this.data, this.quantity);
+// }

@@ -139,6 +139,7 @@ class HomePageView extends GetView<HomePageController> {
                     return GestureDetector(
                       onTap: () {
                         Get.toNamed(Routes.PRODUCT_DETAILS, arguments: data);
+                        
                       },
                       child: Container(
                         margin: const EdgeInsets.all(10),
@@ -153,7 +154,7 @@ class HomePageView extends GetView<HomePageController> {
                               height: 120,
                               margin: const EdgeInsets.all(10),
                               color: Colors.white,
-                              child: Image.asset(data.imageUrl),
+                              child: Image.asset(data.imageUrl ?? ""),
                             ),
                             // Image.asset(data.imageUrl,height: 100,)
                             //Product Name

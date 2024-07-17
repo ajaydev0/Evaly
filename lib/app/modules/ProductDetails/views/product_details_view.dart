@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../widgets/KText.dart';
+import '../../CartPage/controllers/cart_page_controller.dart';
 import '../controllers/product_details_controller.dart';
 
 class ProductDetailsView extends GetView<ProductDetailsController> {
@@ -9,12 +10,14 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
   Widget build(BuildContext context) {
     var AppHeight = (MediaQuery.of(context).size.height) / 100;
     var AppWidth = (MediaQuery.of(context).size.width) / 100;
-    // Get.put(ProductDetailsController());
-    var data = Get.arguments;
+    var cartController = Get.put(CartPageController());
+    var productData = Get.arguments;
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('ProductDetailsView'),
           centerTitle: true,
+          backgroundColor: Colors.white,
         ),
         body: ListView(
           children: [
@@ -26,13 +29,13 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
-                  child: Image.asset(data.imageUrl ?? ""),
+                  child: Image.asset(productData.imageUrl ?? ""),
                 ),
                 // Product Name
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
                   child: Ktext(
-                    text: data.productName ?? "",
+                    text: productData.productName ?? "",
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     overflow: TextOverflow.ellipsis,
@@ -49,7 +52,7 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                     children: [
                       Ktext(
                           text:
-                              "Electronics, SmartPhone - ( ${data.brand ?? ""} )",
+                              "Electronics, SmartPhone - ( ${productData.brand ?? ""} )",
                           fontSize: 12,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -65,7 +68,7 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                     children: [
                       // Main Price
                       Ktext(
-                          text: "৳ ${data.mainPrice ?? ""}",
+                          text: "৳ ${productData.mainPrice ?? ""}",
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           overflow: TextOverflow.ellipsis,
@@ -74,7 +77,7 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                       const SizedBox(width: 10),
                       // Discount Price
                       Ktext(
-                          text: "৳ ${data.discountPrice ?? ""}",
+                          text: "৳ ${productData.discountPrice ?? ""}",
                           fontSize: 10,
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey),
@@ -99,7 +102,7 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
                   child: Ktext(
-                      text: data.description ?? "",
+                      text: productData.description ?? "",
                       fontSize: 12,
                       color: Colors.grey[700]),
                 ),
@@ -161,27 +164,27 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Ktext(
-                              text: data.brand ?? "",
+                              text: productData.brand ?? "",
                               fontSize: 12,
                             ),
                             const SizedBox(height: 10),
                             Ktext(
-                              text: data.productType ?? "",
+                              text: productData.productType ?? "",
                               fontSize: 12,
                             ),
                             const SizedBox(height: 10),
                             Ktext(
-                              text: data.model ?? "",
+                              text: productData.model ?? "",
                               fontSize: 12,
                             ),
                             const SizedBox(height: 10),
                             Ktext(
-                              text: data.color ?? "",
+                              text: productData.color ?? "",
                               fontSize: 12,
                             ),
                             const SizedBox(height: 10),
                             Ktext(
-                              text: data.warranty ?? "",
+                              text: productData.warranty ?? "",
                               fontSize: 12,
                             ),
                           ],
@@ -191,13 +194,17 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                   ),
                 ),
                 const SizedBox(height: 30),
+                // Buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
                         height: AppHeight * 5,
                         minWidth: AppWidth * 42,
-                        onPressed: () {},
+                        onPressed: () {
+                          cartController.addToCart(productData);
+                          //  print("Add To Cart");
+                        },
                         color: Colors.grey.shade100,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -208,7 +215,9 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                     MaterialButton(
                         height: AppHeight * 5,
                         minWidth: AppWidth * 42,
-                        onPressed: () {},
+                        onPressed: () {
+                          print("Buy Now Logic");
+                        },
                         color: Colors.black,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
@@ -218,19 +227,32 @@ class ProductDetailsView extends GetView<ProductDetailsController> {
                             fontSize: 13)),
                   ],
                 ),
-                // Related Product
                 // Padding(
                 //   padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
                 //   child: Row(
                 //     children: [
                 //       Ktext(
-                //         text: "Related Products",
+                //         text: "Related ",
                 //         fontSize: 14,
                 //         fontWeight: FontWeight.bold,
                 //       ),
                 //     ],
                 //   ),
                 // ),
+                const SizedBox(height: 30),
+                // Related Product
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                  child: Row(
+                    children: [
+                      Ktext(
+                        text: "Related Products",
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ],
+                  ),
+                ),
 
                 //Last a Di
                 const SizedBox(height: 50),

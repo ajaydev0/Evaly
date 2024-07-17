@@ -1,39 +1,54 @@
+import 'package:evaly/app/modules/CartPage/list/cart_list.dart';
+import 'package:evaly/app/modules/CartPage/model/cart_model.dart';
+import 'package:evaly/app/modules/ProductDetails/model/product_model.dart';
 import 'package:get/get.dart';
 
 class CartPageController extends GetxController {
+  // double totalAmount = 0;
   RxBool isNullCart = false.obs;
+  // Cart Add logic
+  void addToCart(ProductModel productData) {
+    // if the product is already in cart
+    for (CartModel item in cartList) {
+      if (item.productData.model == productData.model) {
+        item.quantity.value++;
+        print("First");
+        print(item.quantity.value);
+        return;
+      } else {
+        cartList.add(CartModel(productData, 1.obs));
+        print("Second");
+        return;
+      }
+       
+    }
+
+    // If not, add it to the cart
+    print("Last");
+  }
+
+  // Quantity Adjustment
+  // (-) Quantity
+  quantityDelete(data) {
+    if (data.quantity.value > 1) {
+      data.quantity--;
+      cartList.refresh();
+    } else {
+      print("Quantity 1 Ta hoi gese");
+      return;
+    }
+    print(data.quantity);
+  }
+
+  // (+) Quantity
+  quantityAdd(data) {
+    if (data.quantity.value < 5) {
+      data.quantity++;
+      cartList.refresh();
+    } else {
+      print("Quantity 5 Ta hoi gese");
+      return;
+    }
+    print(data.quantity);
+  }
 }
-
-//Cart Model
-class CartModel {
-  String? imageUrl;
-  String? productName;
-  String? description;
-  String? onTap;
-
-  CartModel({this.imageUrl, this.productName, this.description});
-}
-
-//Cart List
-List cartItem = [
-  CartModel(
-      imageUrl: "assets/Product/iphoneX.jpg",
-      productName: "Learn UI/UX Design",
-      description:
-          "Welcome to our School Management App. Our App is very Userfriendly.Hope u like it."),
-  CartModel(
-      imageUrl: "assets/Product/iphoneXR.jpg",
-      productName: "Learn Web Development",
-      description:
-          "Welcome to our School Management App. Our App is very Userfriendly.Hope u like it."),
-  CartModel(
-      imageUrl: "assets/Product/iphone11.jpg",
-      productName: "Learn Grahics Design",
-      description:
-          "Welcome to our School Management App. Our App is very Userfriendly.Hope u like it."),
-  CartModel(
-      imageUrl: "assets/Product/iphone13.jpg",
-      productName: "Learn App Development",
-      description:
-          "Welcome to our School Management App. Our App is very Userfriendly.Hope u like it."),
-];

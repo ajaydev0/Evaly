@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../controllers/cart_page_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class CartPageView extends GetView<CartPageController> {
   const CartPageView({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class CartPageView extends GetView<CartPageController> {
   Widget build(BuildContext context) {
     var AppHeight = (MediaQuery.of(context).size.height) / 100;
     var AppWidth = (MediaQuery.of(context).size.width) / 100;
-    Get.put(CartPageController());
+    var controller = Get.put(CartPageController());
 
     //
 
@@ -32,8 +33,7 @@ class CartPageView extends GetView<CartPageController> {
             IconButton(
                 onPressed: () {
                   // controller.isNullCart.value = false;
-                  cartList = [].obs;
-                  cartList.refresh();
+                  controller.deleteButton();
                 },
                 icon: const Icon(Icons.delete))
           ],
@@ -79,6 +79,7 @@ class CartPageView extends GetView<CartPageController> {
                         itemCount: cartList.length,
                         itemBuilder: (context, index) {
                           var data = cartList[index];
+                         int updatePrice = data.productData.mainPrice * data.quantity.value ;
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Container(
@@ -112,9 +113,15 @@ class CartPageView extends GetView<CartPageController> {
                                     // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Checkbox(
+                                        activeColor: Colors.black,
                                         shape: const CircleBorder(),
-                                        value: false,
-                                        onChanged: (value) {},
+                                        value: data.isSelect,
+                                        onChanged: (value) {
+                                          controller.select(
+                                              index: index,
+                                              select: value!,
+                                              productPrice: updatePrice   );
+                                        },
                                       ),
                                       Container(
                                         height: 70,
@@ -142,14 +149,17 @@ class CartPageView extends GetView<CartPageController> {
                                             width: AppWidth * 55,
                                             // color: Colors.amber,
                                             child: Ktext(
-                                                text: data.productData.productName ?? "",
+                                                text: data.productData
+                                                        .productName ??
+                                                    "",
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 2,
                                                 fontSize: 12),
                                           ),
                                           const SizedBox(height: 2),
                                           Ktext(
-                                              text: "৳ ${data.productData.mainPrice} x 1 ",
+                                              text:
+                                                  "৳ ${data.productData.mainPrice} x ${data.quantity.value} ",
                                               fontSize: 9,
                                               color: Colors.grey),
                                           Container(
@@ -161,7 +171,8 @@ class CartPageView extends GetView<CartPageController> {
                                                       .spaceBetween,
                                               children: [
                                                 Ktext(
-                                                    text: "৳ ${data.productData.mainPrice}",
+                                                    text:
+                                                        ("৳ ${NumberFormat('###,###').format( updatePrice )}"),
                                                     fontSize: 12,
                                                     color: Colors.amber[800],
                                                     fontWeight:
@@ -180,7 +191,9 @@ class CartPageView extends GetView<CartPageController> {
                                                           // adjustQuantity(item,
                                                           //     item.quantity - 1);
                                                           // removeFromCart(item);
-                                                           controller.quantityDelete(data);
+                                                          controller
+                                                              .quantityDelete(
+                                                                  data);
                                                         },
                                                         child: Container(
                                                             height: 20,
@@ -221,7 +234,8 @@ class CartPageView extends GetView<CartPageController> {
                                                                 horizontal: 10),
                                                         child: Ktext(
                                                             // text: "${item.quantity}",
-                                                            text: "${data.quantity.value}",
+                                                            text:
+                                                                "${data.quantity.value}",
                                                             fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight
@@ -229,7 +243,9 @@ class CartPageView extends GetView<CartPageController> {
                                                       ),
                                                       InkWell(
                                                         onTap: () {
-                                                          controller.quantityAdd(data);
+                                                          controller
+                                                              .quantityAdd(
+                                                                  data);
                                                           // print("Add");
                                                           // adjustQuantity(item,
                                                           //     item.quantity + 1);
@@ -300,8 +316,12 @@ class CartPageView extends GetView<CartPageController> {
                     Row(
                       children: [
                         Checkbox(
-                          value: false,
-                          onChanged: (value) {},
+                          activeColor: Colors.black,
+                          shape: const CircleBorder(),
+                          value: controller.isAll.value,
+                          onChanged: (value) {
+                            controller.allSelect(value!);
+                          },
                         ),
                         Ktext(text: "All"),
                       ],
@@ -310,7 +330,8 @@ class CartPageView extends GetView<CartPageController> {
                       children: [
                         Ktext(text: "Total : "),
                         Ktext(
-                          text: "৳1000",
+                          text: ("৳ ${NumberFormat('###,###').format( controller.totalAmount.value)}"),
+                          // text: "৳${controller.totalAmount.value}",
                           color: Colors.amber[800],
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -319,7 +340,10 @@ class CartPageView extends GetView<CartPageController> {
                         MaterialButton(
                             height: 40,
                             minWidth: 100,
-                            onPressed: () {},
+                            onPressed: () {
+                              print(controller.totalAmount.value);
+
+                            },
                             color: Colors.black,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),

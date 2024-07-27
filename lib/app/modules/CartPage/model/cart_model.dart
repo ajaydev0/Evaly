@@ -21,6 +21,7 @@ class CartModel {
   String? color;
   String? warranty;
   Function? onTap;
+  bool isSelect;
 
   CartModel(
       //
@@ -39,7 +40,8 @@ class CartModel {
       this.model,
       this.color,
       this.warranty,
-      this.onTap});
+      this.onTap,
+      this.isSelect = false,});
 }
 
 

@@ -3,9 +3,7 @@ import 'package:evaly/app/router/app_pages.dart';
 import 'package:evaly/app/widgets/KText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import '../controllers/cart_page_controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class CartPageView extends GetView<CartPageController> {
@@ -32,15 +30,18 @@ class CartPageView extends GetView<CartPageController> {
           actions: [
             IconButton(
                 onPressed: () {
-                  // controller.isNullCart.value = false;
-                  controller.deleteButton();
+                  if (cartList.isNotEmpty) {
+                    controller.confirmDelete(context);
+                  } else {
+                    print("Cart is Empty.");
+                  }
                 },
                 icon: const Icon(Icons.delete))
           ],
         ),
         body: Column(
           children: [
-            controller.isNullCart.value
+            cartList.isEmpty
                 ? Expanded(
                     child: Container(
                       width: AppWidth * 100,
@@ -70,236 +71,253 @@ class CartPageView extends GetView<CartPageController> {
                       ),
                     ),
                   )
-                : SizedBox(
-                    height: AppHeight * 71,
-                    width: AppWidth * 100,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: ListView.builder(
-                        itemCount: cartList.length,
-                        itemBuilder: (context, index) {
-                          var data = cartList[index];
-                         int updatePrice = data.productData.mainPrice * data.quantity.value ;
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10,
-                                        left: 10,
-                                        right: 10,
-                                        bottom: 10),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        const Icon(Icons.store_outlined,
-                                            size: 18),
-                                        const SizedBox(width: 4),
-                                        Ktext(
-                                            text:
-                                                "${data.productData.brand} Official Store for Flash Sale COD" ??
-                                                    "",
-                                            fontSize: 11),
-                                      ],
-                                    ),
-                                  ),
-                                  Row(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                : Expanded(
+                    child: Container(
+                        color: Colors.grey.shade200,
+                        // height: AppHeight * 75,
+                        // width: AppWidth * 100,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: ListView.builder(
+                            itemCount: cartList.length,
+                            itemBuilder: (context, index) {
+                              var data = cartList[index];
+                              // int productPrice = data.productData.mainPrice;
+                              // int productQuantity = data.quantity.value;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Column(
                                     children: [
-                                      Checkbox(
-                                        activeColor: Colors.black,
-                                        shape: const CircleBorder(),
-                                        value: data.isSelect,
-                                        onChanged: (value) {
-                                          controller.select(
-                                              index: index,
-                                              select: value!,
-                                              productPrice: updatePrice   );
-                                        },
-                                      ),
-                                      Container(
-                                        height: 70,
-                                        width: 75,
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border: Border.all(
-                                                color: Colors.grey.shade200),
-                                            borderRadius:
-                                                BorderRadius.circular(15)),
-                                        padding: const EdgeInsets.all(3),
-                                        child: Image.asset(
-                                          data.productData.imageUrl ?? "",
-                                          // height: 60,
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10,
+                                            left: 10,
+                                            right: 10,
+                                            bottom: 10),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            const Icon(Icons.store_outlined,
+                                                size: 18),
+                                            const SizedBox(width: 4),
+                                            Ktext(
+                                                text:
+                                                    "${data.productData.brand} Official Store for Flash Sale COD" ??
+                                                        "",
+                                                fontSize: 11),
+                                          ],
                                         ),
                                       ),
-                                      const SizedBox(width: 8),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Row(
                                         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Container(
-                                            height: 40,
-                                            width: AppWidth * 55,
-                                            // color: Colors.amber,
-                                            child: Ktext(
-                                                text: data.productData
-                                                        .productName ??
-                                                    "",
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                fontSize: 12),
+                                          Checkbox(
+                                            activeColor: Colors.black,
+                                            shape: const CircleBorder(),
+                                            value: data.isSelect,
+                                            onChanged: (value) {
+                                              controller.select(
+                                                index: index,
+                                                select: value!,
+                                                productPrice: data.productData
+                                                        .mainPrice.value *
+                                                    data.quantity.value,
+                                              );
+                                            },
                                           ),
-                                          const SizedBox(height: 2),
-                                          Ktext(
-                                              text:
-                                                  "৳ ${data.productData.mainPrice} x ${data.quantity.value} ",
-                                              fontSize: 9,
-                                              color: Colors.grey),
                                           Container(
-                                            height: 20,
-                                            width: AppWidth * 55,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Ktext(
-                                                    text:
-                                                        ("৳ ${NumberFormat('###,###').format( updatePrice )}"),
-                                                    fontSize: 12,
-                                                    color: Colors.amber[800],
-                                                    fontWeight:
-                                                        FontWeight.bold),
-
-                                                //
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 10),
-                                                  child: Row(
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: () {
-                                                          // print("Remove");
-                                                          // adjustQuantity(item,
-                                                          //     item.quantity - 1);
-                                                          // removeFromCart(item);
-                                                          controller
-                                                              .quantityDelete(
-                                                                  data);
-                                                        },
-                                                        child: Container(
-                                                            height: 20,
-                                                            width: 20,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          .2),
-                                                                  blurRadius:
-                                                                      5.0,
-                                                                  offset:
-                                                                      const Offset(
-                                                                          0, 3),
-                                                                ),
-                                                              ],
-                                                              color: Colors
-                                                                  .grey[200],
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          40),
-                                                            ),
-                                                            child: const Icon(
-                                                              Icons.remove,
-                                                              color:
-                                                                  Colors.black,
-                                                              size: 15,
-                                                            )),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 10),
-                                                        child: Ktext(
-                                                            // text: "${item.quantity}",
-                                                            text:
-                                                                "${data.quantity.value}",
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          controller
-                                                              .quantityAdd(
-                                                                  data);
-                                                          // print("Add");
-                                                          // adjustQuantity(item,
-                                                          //     item.quantity + 1);
-                                                        },
-                                                        child: Container(
-                                                            height: 20,
-                                                            width: 20,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          .2),
-                                                                  blurRadius:
-                                                                      5.0,
-                                                                  offset:
-                                                                      const Offset(
-                                                                          0, 3),
-                                                                ),
-                                                              ],
-                                                              color: Colors
-                                                                  .grey[200],
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          40),
-                                                            ),
-                                                            child: const Icon(
-                                                              Icons.add,
-                                                              color:
-                                                                  Colors.black,
-                                                              size: 15,
-                                                            )),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
+                                            height: 70,
+                                            width: 75,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    color:
+                                                        Colors.grey.shade200),
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            padding: const EdgeInsets.all(3),
+                                            child: Image.asset(
+                                              data.productData.imageUrl ?? "",
+                                              // height: 60,
                                             ),
                                           ),
+                                          const SizedBox(width: 8),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Container(
+                                                height: 40,
+                                                width: AppWidth * 55,
+                                                // color: Colors.amber,
+                                                child: Ktext(
+                                                    text: data.productData
+                                                            .productName ??
+                                                        "",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    fontSize: 12),
+                                              ),
+                                              const SizedBox(height: 2),
+                                              Ktext(
+                                                  text:
+                                                      "৳ ${data.productData.mainPrice.value} x ${data.quantity.value} ",
+                                                  fontSize: 9,
+                                                  color: Colors.grey),
+                                              Container(
+                                                height: 20,
+                                                width: AppWidth * 55,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Ktext(
+                                                        text:
+                                                            ("৳ ${NumberFormat('###,###').format(data.productData.mainPrice.value * data.quantity.value)}"),
+                                                        fontSize: 12,
+                                                        color:
+                                                            Colors.amber[800],
+                                                        fontWeight:
+                                                            FontWeight.bold),
+
+                                                    //
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 10),
+                                                      child: Row(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () {
+                                                              // print("Remove");
+                                                              // adjustQuantity(item,
+                                                              //     item.quantity - 1);
+                                                              // removeFromCart(item);
+                                                              controller
+                                                                  .quantityDelete(
+                                                                      data);
+                                                            },
+                                                            child: Container(
+                                                                height: 20,
+                                                                width: 20,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      color: Colors
+                                                                          .black
+                                                                          .withOpacity(
+                                                                              .2),
+                                                                      blurRadius:
+                                                                          5.0,
+                                                                      offset:
+                                                                          const Offset(
+                                                                              0,
+                                                                              3),
+                                                                    ),
+                                                                  ],
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      200],
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              40),
+                                                                ),
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons.remove,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  size: 15,
+                                                                )),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        10),
+                                                            child: Ktext(
+                                                                // text: "${item.quantity}",
+                                                                text:
+                                                                    "${data.quantity.value}",
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                  .quantityAdd(
+                                                                      data);
+                                                              // print("Add");
+                                                              // adjustQuantity(item,
+                                                              //     item.quantity + 1);
+                                                            },
+                                                            child: Container(
+                                                                height: 20,
+                                                                width: 20,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      color: Colors
+                                                                          .black
+                                                                          .withOpacity(
+                                                                              .2),
+                                                                      blurRadius:
+                                                                          5.0,
+                                                                      offset:
+                                                                          const Offset(
+                                                                              0,
+                                                                              3),
+                                                                    ),
+                                                                  ],
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      200],
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              40),
+                                                                ),
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons.add,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  size: 15,
+                                                                )),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )
                                         ],
-                                      )
+                                      ),
+                                      const SizedBox(height: 20),
                                     ],
                                   ),
-                                  const SizedBox(height: 20),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    )),
+                                ),
+                              );
+                            },
+                          ),
+                        )),
+                  ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -330,7 +348,8 @@ class CartPageView extends GetView<CartPageController> {
                       children: [
                         Ktext(text: "Total : "),
                         Ktext(
-                          text: ("৳ ${NumberFormat('###,###').format( controller.totalAmount.value)}"),
+                          text:
+                              ("৳ ${NumberFormat('###,###').format(controller.totalAmount.value)}"),
                           // text: "৳${controller.totalAmount.value}",
                           color: Colors.amber[800],
                           fontWeight: FontWeight.bold,
@@ -341,8 +360,7 @@ class CartPageView extends GetView<CartPageController> {
                             height: 40,
                             minWidth: 100,
                             onPressed: () {
-                              print(controller.totalAmount.value);
-
+                              controller.totalAmount.value = 0;
                             },
                             color: Colors.black,
                             shape: RoundedRectangleBorder(
@@ -358,10 +376,13 @@ class CartPageView extends GetView<CartPageController> {
                 ),
               ),
             ),
-            Container(
-              height: AppHeight * 8.4,
-              width: double.infinity,
-              color: Colors.grey.shade200,
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Container(
+                height: 50,
+                width: double.infinity,
+                color: Colors.grey.shade200,
+              ),
             ),
           ],
         ),

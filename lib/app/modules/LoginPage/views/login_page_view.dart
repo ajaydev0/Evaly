@@ -100,7 +100,8 @@ class LoginPageView extends GetView<LoginPageController> {
                                                 width: 1.5)),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: kWidth * 5.5,
-                                            vertical: kHeight * 2.7))),
+                                            vertical: kHeight * 2.7))
+                                            ),
                                 SizedBox(height: kHeight * 1.3),
                                 Ktext(
                                     text: "Password",
@@ -157,7 +158,8 @@ class LoginPageView extends GetView<LoginPageController> {
                                             borderSide: const BorderSide()),
                                         focusedBorder:
                                             OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Kcolor.black, width: 1.5)),
-                                        contentPadding: EdgeInsets.symmetric(horizontal: kWidth * 5.5, vertical: kHeight * 2.7))),
+                                        contentPadding: EdgeInsets.symmetric(horizontal: kWidth * 5.5, vertical: kHeight * 2.7))
+                                        ),
                                 SizedBox(height: kHeight * 1.3),
                                 Row(children: [
                                   AnimatedContainer(

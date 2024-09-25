@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:evaly/app/router/app_pages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -264,48 +265,62 @@ class ProfilePageView extends GetView<ProfilePageController> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        height: 55,
-                        width: 55,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Icon(
-                          Icons.edit_document,
-                          color: Colors.grey.shade800,
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Icon(
+                            Icons.edit_document,
+                            color: Colors.grey.shade800,
+                          ),
                         ),
                       ),
-                      Container(
-                        height: 55,
-                        width: 55,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.grey.shade800,
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.grey.shade800,
+                          ),
                         ),
                       ),
-                      Container(
-                        height: 55,
-                        width: 55,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Icon(
-                          Icons.location_on_rounded,
-                          color: Colors.grey.shade800,
+                      InkWell(
+                        onTap: () {
+                          Get.toNamed(Routes.ADDRESS_PAGE);
+                        },
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Icon(
+                            Icons.location_on_rounded,
+                            color: Colors.grey.shade800,
+                          ),
                         ),
                       ),
-                      Container(
-                        height: 55,
-                        width: 55,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Icon(
-                          Icons.message_rounded,
-                          color: Colors.grey.shade800,
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Icon(
+                            Icons.message_rounded,
+                            color: Colors.grey.shade800,
+                          ),
                         ),
                       ),
                     ],
@@ -335,7 +350,9 @@ class ProfilePageView extends GetView<ProfilePageController> {
                     child: Divider(),
                   ),
                   ListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(Routes.FORGOT_PASSWORD_PAGE);
+                    },
                     title: Ktext(
                         text: "Change Password", color: Colors.grey.shade600),
                     leading: Icon(
@@ -407,7 +424,9 @@ class ProfilePageView extends GetView<ProfilePageController> {
                   ),
                   height: double.infinity,
                   elevation: 0,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(Routes.EDIT_PROFILE_PAGE);
+                  },
                   color: Colors.grey.shade900,
                   child: Ktext(
                     text: "Edit Profile",

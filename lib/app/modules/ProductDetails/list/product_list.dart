@@ -1,4 +1,6 @@
 //Product List
+import 'package:get/get.dart';
+
 import '../model/product_model.dart';
 
 List<ProductModel> productList = [
@@ -8,7 +10,7 @@ List<ProductModel> productList = [
       productType: "Mobile Phone",
       brand: "Apple",
       discountPrice: 89900,
-      mainPrice: 75500,
+      mainPrice: 75500.obs,
       stock: "19",
       description:
           "The iPhone X (Roman numeral pronounced [13]) is a smartphone designed, developed and marketed by Apple. It is part of the 11th generation of the iPhone. Available for pre-order from October 27, 2017, it was released on November 3, 2017. The naming of the iPhone X (skipping the iPhone 9 and 9s) is to mark the 10th anniversary of the iPhoneThe iPhone X used a glass and stainless-steel form factor and bezel-less design, shrinking the bezels while not having a chin. It was the first iPhone to use an OLED screen.",
@@ -22,7 +24,7 @@ List<ProductModel> productList = [
     productType: "Mobile Phone",
     brand: "Apple",
     discountPrice: 81900,
-    mainPrice: 70000,
+    mainPrice: 70000.obs,
     description:
         "The iPhone XR (Roman numeral pronounced [13]) is a smartphone designed, developed and marketed by Apple. It is part of the 11th generation of the iPhone. Available for pre-order from October 27, 2017, it was released on November 3, 2017. The naming of the iPhone X (skipping the iPhone 9 and 9s) is to mark the 10th anniversary of the iPhoneThe iPhone X used a glass and stainless-steel form factor and bezel-less design, shrinking the bezels while not having a chin. It was the first iPhone to use an OLED screen.",
     model: "Iphone XR",
@@ -35,7 +37,7 @@ List<ProductModel> productList = [
       productType: "Mobile Phone",
       brand: "Apple",
       discountPrice: 95000,
-      mainPrice: 87200,
+      mainPrice: 87200.obs,
       description:
           "The iPhone 11 (Roman numeral pronounced [13]) is a smartphone designed, developed and marketed by Apple. It is part of the 11th generation of the iPhone. Available for pre-order from October 27, 2017, it was released on November 3, 2017. The naming of the iPhone X (skipping the iPhone 9 and 9s) is to mark the 10th anniversary of the iPhoneThe iPhone X used a glass and stainless-steel form factor and bezel-less design, shrinking the bezels while not having a chin. It was the first iPhone to use an OLED screen.",
       model: "Iphone 11",
@@ -47,7 +49,7 @@ List<ProductModel> productList = [
     productType: "Mobile Phone",
     brand: "Apple",
     discountPrice: 160000,
-    mainPrice: 130500,
+    mainPrice: 130500.obs,
     description:
         "The iPhone 13 (Roman numeral pronounced [13]) is a smartphone designed, developed and marketed by Apple. It is part of the 11th generation of the iPhone. Available for pre-order from October 27, 2017, it was released on November 3, 2017. The naming of the iPhone X (skipping the iPhone 9 and 9s) is to mark the 10th anniversary of the iPhoneThe iPhone X used a glass and stainless-steel form factor and bezel-less design, shrinking the bezels while not having a chin. It was the first iPhone to use an OLED screen.",
     model: "Iphone 13",
@@ -60,7 +62,7 @@ List<ProductModel> productList = [
       productType: "Mobile Phone",
       brand: "Apple",
       discountPrice: 89900,
-      mainPrice: 75500,
+      mainPrice: 75500.obs,
       stock: "19",
       description:
           "jdlsfadfklhdksfhsdkfjhdskjfhdghfdgkjfhdgkjhdkghfdghdfgkjhdkgjhdfkgjhdfkghfdkghfdkgjhfdkjghdfkjghfdjkghdfkghdfkghdfkjg dfkghdfkghdfkjgdfjhfj hdfghdfkjghfjkghdfgh fghdkfjsghfk dfghkfdjsghfdjh"),
@@ -70,7 +72,7 @@ List<ProductModel> productList = [
       productType: "Mobile Phone",
       brand: "Apple",
       discountPrice: 81900,
-      mainPrice: 70000,
+      mainPrice: 70000.obs,
       stock: "19",
       description:
           "jdlsfadfklhdksfhsdkfjhdskjfhdghfdgkjfhdgkjhdkghfdghdfgkjhdkgjhdfkgjhdfkghfdkghfdkgjhfdkjghdfkjghfdjkghdfkghdfkghdfkjg dfkghdfkghdfkjgdfjhfj hdfghdfkjghfjkghdfgh fghdkfjsghfk dfghkfdjsghfdjh"),
@@ -80,7 +82,7 @@ List<ProductModel> productList = [
       productType: "Mobile Phone",
       brand: "Apple",
       discountPrice: 95000,
-      mainPrice: 87200,
+      mainPrice: 87200.obs,
       stock: "19",
       description:
           "jdlsfadfklhdksfhsdkfjhdskjfhdghfdgkjfhdgkjhdkghfdghdfgkjhdkgjhdfkgjhdfkghfdkghfdkgjhfdkjghdfkjghfdjkghdfkghdfkghdfkjg dfkghdfkghdfkjgdfjhfj hdfghdfkjghfjkghdfgh fghdkfjsghfk dfghkfdjsghfdjh"),
@@ -90,7 +92,7 @@ List<ProductModel> productList = [
       productType: "Mobile Phone",
       brand: "Apple",
       discountPrice: 160000,
-      mainPrice: 130500,
+      mainPrice: 130500.obs,
       stock: "19",
       description:
           "jdlsfadfklhdksfhsdkfjhdskjfhdghfdgkjfhdgkjhdkghfdghdfgkjhdkgjhdfkgjhdfkghfdkghfdkgjhfdkjghdfkjghfdjkghdfkghdfkghdfkjg dfkghdfkghdfkjgdfjhfj hdfghdfkjghfjkghdfgh fghdkfjsghfk dfghkfdjsghfdjh")

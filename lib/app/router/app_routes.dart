@@ -10,6 +10,10 @@ abstract class Routes {
   static const onBoard = _Path.onBoard;
   static const CART_PAGE = '/cart-page';
   static const PRODUCT_DETAILS = '/product-details';
+  static const EDIT_PROFILE_PAGE = '/edit-profile-page';
+  static const FORGOT_PASSWORD_PAGE = '/forgot-password-page';
+  static const ADDRESS_PAGE = '/address-page';
+  static const ADD_NEW_ADDRESS_PAGE = '/add-new-address-page';
 }
 
 abstract class _Path {

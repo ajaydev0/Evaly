@@ -27,7 +27,7 @@ class NavBarView extends GetView<NavBarController> {
               backgroundColor: Colors.white,
               // showUnselectedLabels: false,
               showSelectedLabels: true,
-              selectedFontSize:11 ,
+              selectedFontSize: 11,
               unselectedFontSize: 11,
               selectedItemColor: Colors.black,
               selectedLabelStyle: TextStyle(fontFamily: "Aleo"),
@@ -36,7 +36,7 @@ class NavBarView extends GetView<NavBarController> {
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 3),
+                    padding: const EdgeInsets.only(top: 5, bottom: 3),
                     child: Image.asset(
                       controller.currentindex.value == 0
                           ? "assets/icons/home.png"
@@ -49,11 +49,10 @@ class NavBarView extends GetView<NavBarController> {
                     ),
                   ),
                   label: "Home",
-                  
                 ),
                 BottomNavigationBarItem(
                   icon: Padding(
-                    padding: const EdgeInsets.only(top: 5,bottom: 3),
+                    padding: const EdgeInsets.only(top: 5, bottom: 3),
                     child: Image.asset(
                       controller.currentindex.value == 1
                           ? "assets/icons/love.png"
@@ -69,24 +68,41 @@ class NavBarView extends GetView<NavBarController> {
                   label: 'Favorite',
                 ),
                 BottomNavigationBarItem(
-                  icon: Padding(
-            padding: const EdgeInsets.only(top: 5,bottom: 3),
-                    child: Image.asset(
-                      controller.currentindex.value == 2
-                          ? "assets/icons/cart.png"
-                          : "assets/icons/cart2.png",
-                      height: navBarHeight,
-                      // height: 27,
-                      color: controller.currentindex.value == 2
-                          ? Kcolor.black
-                          : Colors.grey.shade500,
-                    ),
+                  
+                  icon: Stack(
+                    
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5, bottom: 3),
+                        child: Image.asset(
+                          controller.currentindex.value == 2
+                              ? "assets/icons/cart.png"
+                              : "assets/icons/cart2.png",
+                          height: navBarHeight,
+                          // height: 27,
+                          color: controller.currentindex.value == 2
+                              ? Kcolor.black
+                              : Colors.grey.shade500,
+                        ),
+                      ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            height: 12,
+                            width: 12,
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(50)),
+                          ),
+                        )
+                    ],
                   ),
                   label: 'Cart',
                 ),
                 BottomNavigationBarItem(
                   icon: Padding(
-              padding: const EdgeInsets.only(top: 5,bottom: 3),
+                    padding: const EdgeInsets.only(top: 5, bottom: 3),
                     child: Image.asset(
                       controller.currentindex.value == 3
                           ? "assets/icons/user.png"

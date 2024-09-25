@@ -1,11 +1,13 @@
 //Product Model
+import 'package:get/get.dart';
+
 class ProductModel {
   String? imageUrl;
   String? productName;
   String? productType;
   String? brand;
   int? discountPrice;
-  int? mainPrice;
+  RxInt? mainPrice;
   String? stock;
   String? description;
   String? specifications;
